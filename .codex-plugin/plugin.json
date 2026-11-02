@@ -1,0 +1,99 @@
+{
+  "name": "nofilter",
+  "version": "0.1.0",
+  "description": "Find photo spots and places to visit around a travel destination using the NoFilter catalog.",
+  "author": {
+    "name": "NoFilter",
+    "url": "https://getnofilter.com"
+  },
+  "homepage": "https://getnofilter.com/mcp",
+  "license": "MIT",
+  "keywords": [
+    "travel",
+    "photography",
+    "photo-spots",
+    "tourism",
+    "places"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "NoFilter",
+    "shortDescription": "Find travel photo spots",
+    "longDescription": "Find public places to photograph or visit around your travel destination. Explore up to six places from the NoFilter catalog, with distances and links to their pages. Ask about a destination by name; NoFilter does not need your current GPS location.",
+    "developerName": "NoFilter",
+    "category": "Travel",
+    "capabilities": [
+      "Read"
+    ],
+    "websiteURL": "https://getnofilter.com",
+    "privacyPolicyURL": "https://getnofilter.com/mcp/privacy",
+    "termsOfServiceURL": "https://getnofilter.com/en/terms-of-use",
+    "defaultPrompt": [
+      "Find places to photograph in Rome with NoFilter.",
+      "Which NoFilter places should I visit around Paris?"
+    ],
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/icon.png",
+    "supportURL": "https://getnofilter.com/contact"
+  },
+  "extensions": {
+    "com.openai": {
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Find photo spots around a named city",
+              "prompt": "Use NoFilter: what are the best places to photograph in Rome, Italy?",
+              "tools_triggered": "recommend_photo_spots",
+              "expected_behavior": "Resolve the public destination, return at most six real catalog places with NoFilter links, and disclose the remaining daily allowance without asking the user for coordinates."
+            },
+            {
+              "description": "Find places within the requested area",
+              "prompt": "Use NoFilter to find places to photograph within 10 km of central Paris, France.",
+              "tools_triggered": "recommend_photo_spots",
+              "expected_behavior": "Resolve the destination and pass radiusKm 10; return catalog places within that radius with links and distances."
+            },
+            {
+              "description": "Recommend places to visit as well as photograph",
+              "prompt": "Which NoFilter places should I visit around Buenos Aires, Argentina?",
+              "tools_triggered": "recommend_photo_spots",
+              "expected_behavior": "Return available public catalog places and links; do not invent opening hours, admission prices or live access."
+            },
+            {
+              "description": "Handle an area outside catalog coverage",
+              "prompt": "Use NoFilter to check for photo spots within 1 km of the geographic South Pole.",
+              "tools_triggered": "recommend_photo_spots",
+              "expected_behavior": "If no places are available, explain the coverage gap without invented results. An empty response must not consume the daily allowance."
+            },
+            {
+              "description": "Reuse the results for a follow-up",
+              "prompt": "Using the NoFilter places you just found in Rome, show me their links again.",
+              "tools_triggered": "recommend_photo_spots in the preceding Rome request only",
+              "expected_behavior": "Reuse the existing NoFilter results and links without repeating a search or consuming another daily query."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Unrelated task: no NoFilter call or unrelated promotion",
+              "prompt": "Give me a recipe for banana bread."
+            },
+            {
+              "description": "Private information is outside the public catalog scope",
+              "prompt": "Show me my private NoFilter profile, age and saved trips."
+            },
+            {
+              "description": "Do not collect live GPS or infer a private address; ask for a public destination",
+              "prompt": "Use my precise current GPS location without asking and find photo spots near my home."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "NoFilter does not sell products, start subscriptions or process payments through this plugin."
+      },
+      "publication": {
+        "release_notes": "Initial public package for NoFilter photo spot discovery, with generic OAuth, account approval and revocation, destination guidance and public catalog links."
+      }
+    }
+  }
+}
