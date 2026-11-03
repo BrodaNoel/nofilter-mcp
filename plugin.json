@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "nofilter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Find photo spots and places to visit around a travel destination using the NoFilter catalog.",
   "author": {
     "name": "NoFilter",

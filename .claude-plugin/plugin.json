@@ -1,7 +1,7 @@
 {
   "name": "nofilter",
   "displayName": "NoFilter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Find photo spots and places to visit around a travel destination using the NoFilter catalog.",
   "author": {
     "name": "NoFilter",
